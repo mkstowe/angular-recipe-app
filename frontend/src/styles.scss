@@ -1,0 +1,94 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@import "~minireset.css";
+
+@import url("https://fonts.googleapis.com/css?family=Material+Icons+Outlined|Material+Icons");
+@import url("https://fonts.googleapis.com/css2?family=Assistant:wght@400;600;700;800&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Work+Sans:wght@300;400;700;800;900&display=swap");
+
+html,
+body {
+  height: 100%;
+}
+
+html {
+  overflow: hidden;
+}
+
+.textarea {
+  min-height: 100px;
+}
+
+@layer components {
+  .tab {
+    @apply hover:text-light/90 active:text-light/80 after:bg-light after:hover:bg-light/90 after:active:bg-light/80 duration-200;
+  }
+
+  .tab.selected {
+    @apply after:bg-light before:bg-light text-light;
+  }
+
+  .btn {
+    @apply inline-flex items-center py-3 px-6 bg-primary-300 text-light text-lg font-semibold border-none rounded-md cursor-pointer hover:bg-primary-400 active:bg-primary-500;
+  }
+
+  .btns-container {
+    @apply flex gap-3 mt-5;
+  }
+
+  .btns-container.btns-centered {
+    @apply justify-center;
+  }
+
+  .btns-container.align-end {
+    @apply ml-auto;
+  }
+
+  .form-field-label {
+    @apply font-bold text-dark/80 text-xl mb-3;
+  }
+
+  .input-box {
+    @apply inline-block text-lg border-dark/30 border-2 border-solid rounded-md bg-light/90 py-2 px-3 w-20 mr-2 font-semibold;
+  }
+
+  .input-box-label {
+    @apply font-semibold text-dark/80;
+  }
+
+  .textbox,
+  .textarea {
+    @apply block text-lg border-dark/30 border-2 border-solid rounded-md bg-light/90 py-2 px-3 w-full font-semibold placeholder:text-dark/50;
+  }
+
+  .textbox:hover,
+  .textarea:hover,
+  .input-box:hover {
+    @apply bg-light/95 border-dark/40;
+  }
+
+  .textbox:focus,
+  .textarea:focus,
+  .input-box:focus {
+    @apply bg-light outline-none border-dark/40;
+  }
+
+  .textarea {
+    @apply resize-y;
+  }
+
+  .icon {
+    @apply text-primary-300 hover:text-primary-400 active:text-primary-500 text-4xl font-extrabold cursor-pointer;
+  }
+
+  .ingredient,
+  .step {
+    @apply text-lg;
+  }
+
+  .separator {
+    @apply border-t-2 border-solid border-dark/30 my-5;
+  }
+}

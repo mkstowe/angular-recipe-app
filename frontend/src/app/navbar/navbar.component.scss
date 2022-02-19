@@ -1,0 +1,27 @@
+.tab {
+  position: relative;
+}
+
+.tab::after {
+  content: "";
+  position: absolute;
+  bottom: -5px;
+  left: -1%;
+
+  height: 3px;
+  width: 100%;
+
+  margin: auto;
+
+  transition: transform 0.2s ease-out;
+
+  // hide by default
+  transform: scaleX(0);
+  transform-origin: bottom right;
+}
+
+.tab.selected::after,
+.tab:hover:after {
+  transform: scaleX(1.02);
+  transform-origin: bottom left;
+}

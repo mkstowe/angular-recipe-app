@@ -1,0 +1,52 @@
+###
+
+DELETE http://localhost:3000/collections HTTP/1.1
+Content-Type: application/json
+
+###
+
+GET http://localhost:3000/collections
+
+###
+
+POST http://localhost:3000/collections HTTP/1.1
+Content-Type: application/json
+
+{
+    "title": "Collection 1"
+}
+
+###
+
+POST http://localhost:3000/collections HTTP/1.1
+Content-Type: application/json
+
+{
+    "title": "Collection 2"
+}
+
+###
+
+POST http://localhost:3000/collections HTTP/1.1
+Content-Type: application/json
+
+{
+    "title": "Collection 3"
+}
+
+###
+
+PATCH http://localhost:3000/collections/620462ea15bd1dad7f786371 HTTP/1.1
+Content-Type: application/json
+
+{
+    "title": "Updated Collection"
+}
+
+###
+
+DELETE http://localhost:3000/collections/620462ea15bd1dad7f786371 HTTP/1.1
+Content-Type: application/json
+
+###
+

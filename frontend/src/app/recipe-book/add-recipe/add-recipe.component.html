@@ -1,0 +1,133 @@
+<div
+  class="
+    add-recipe-wrapper
+    flex flex-col
+    items-center
+    content-center
+    justify-center
+    w-full
+    h-full
+  "
+>
+  <h2 class="text-dark/80 inline-block text-3xl font-bold">New Recipe</h2>
+
+  <form
+    #form="ngForm"
+    (ngSubmit)="onFormSubmit(form)"
+    class="
+      h-5/6
+      mt-7
+      scrollbar-thin scrollbar-track-light scrollbar-thumb-primary-200
+      flex flex-col
+      content-center
+      w-1/2
+      pr-5
+      overflow-y-auto
+    "
+  >
+    <div class="form-field mb-5">
+      <input
+        class="textbox"
+        ngModel
+        #titleField="ngModel"
+        name="name"
+        type="text"
+        placeholder="Recipe Name"
+        required
+      />
+      <ng-container *ngIf="showValidationErrors && titleField.invalid">
+        <p class="text-primary-300" *ngIf="titleField.errors?.['required']">
+          Please enter a recipe name
+        </p>
+      </ng-container>
+    </div>
+
+    <div class="form-field">
+      <textarea
+        class="textarea"
+        ngModel
+        name="description"
+        placeholder="Description"
+      ></textarea>
+    </div>
+
+    <hr class="separator" />
+
+    <div class="form-field mb-5">
+      <textarea
+        class="textarea"
+        ngModel
+        name="ingredients"
+        placeholder="Ingredients (one ingredient per line)"
+      ></textarea>
+    </div>
+
+    <div class="form-field">
+      <textarea
+        class="textarea"
+        ngModel
+        name="steps"
+        placeholder="Steps"
+      ></textarea>
+    </div>
+
+    <hr class="separator" />
+
+    <div class="form-field mb-5">
+      <h3 class="form-field-label">Prep Time</h3>
+      <input class="input-box" type="number" name="prepHours" ngModel /><span
+        class="input-box-label mr-5"
+        >Hours</span
+      >
+      <input class="input-box" type="number" name="prepMinutes" ngModel /><span
+        class="input-box-label"
+        >Minutes</span
+      >
+    </div>
+
+    <div class="form-field">
+      <h3 class="form-field-label">Cook Time</h3>
+      <input class="input-box" type="number" name="cookHours" ngModel />
+      <span class="input-box-label mr-5">Hours</span>
+      <input class="input-box" type="number" name="cookMinutes" ngModel /><span
+        class="input-box-label"
+        >Minutes</span
+      >
+    </div>
+
+    <hr class="separator" />
+
+    <div class="form-field mb-5">
+      <h3 class="form-field-label">Number of servings:</h3>
+      <input class="input-box w-32" type="number" name="servings" ngModel />
+    </div>
+
+    <div class="form-field">
+      <h3 class="form-field-label">Calories:</h3>
+      <input class="input-box w-32" type="number" name="calories" ngModel />
+    </div>
+
+    <hr class="separator" />
+
+    <div class="form-field">
+      <textarea
+        class="textarea"
+        ngModel
+        name="notes"
+        placeholder="Notes"
+      ></textarea>
+    </div>
+
+    <div class="btns-container">
+      <a role="button" (click)="back()" class="btn">Cancel</a>
+      <button class="btn align-end">Create Recipe</button>
+      <ng-container *ngIf="showValidationErrors && titleField.invalid">
+        <div class="align-center inline-flex items-center justify-center">
+          <p class="text-primary-300" *ngIf="titleField.errors?.['required']">
+            Please fix errors
+          </p>
+        </div>
+      </ng-container>
+    </div>
+  </form>
+</div>
