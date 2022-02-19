@@ -1,4 +1,6 @@
 import { Injectable } from '@angular/core';
+import { Observable } from 'rxjs';
+import { Ingredient } from './models/ingredient.model';
 import { Recipe } from './models/recipe.model';
 import { WebRequestService } from './web-request.service';
 
@@ -34,7 +36,7 @@ export class RecipeService {
     return this.webReqService.get(`recipes/${recipeId}/ingredients`);
   }
 
-  addIngredients(recipeId: String, payload: [any]) {
+  addIngredients(recipeId: String, payload: any[]) {
     return this.webReqService.post(`recipes/${recipeId}/ingredients`, payload);
   }
 

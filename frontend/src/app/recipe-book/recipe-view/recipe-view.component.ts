@@ -1,5 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { Observable } from 'rxjs';
+import { Ingredient } from 'src/app/shared/models/ingredient.model';
 import { Recipe } from 'src/app/shared/models/recipe.model';
 import { RecipeService } from 'src/app/shared/recipe.service';
 
@@ -10,8 +12,13 @@ import { RecipeService } from 'src/app/shared/recipe.service';
 })
 export class RecipeViewComponent implements OnInit {
   @Input() recipe: Recipe;
+  ingredients: any[];
 
-  constructor() {}
+  constructor(private recipeService: RecipeService) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.recipeService.getIngredients(this.recipe['_id']).subscribe((ingredients: any) => {
+      this.ingredients = ingredients;
+    });
+  }
 }

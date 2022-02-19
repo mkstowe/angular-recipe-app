@@ -21,7 +21,6 @@ export class RecipeBookComponent implements OnInit {
 
   ngOnInit(): void {
     this.route.paramMap.subscribe((params) => {
-      console.log(params.get('recipeId'));
       if (params.get('recipeId')) {
         this.selectedRecipeId = params.get('recipeId') as string;
         this.recipeService

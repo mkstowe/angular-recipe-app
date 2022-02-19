@@ -24,8 +24,6 @@ export class AddRecipeComponent implements OnInit {
   onFormSubmit(form: NgForm) {
     if (form.invalid) return (this.showValidationErrors = true);
 
-    console.log(this.parseIngredients(form.value.ingredients));
-
     let newRecipe = {
       title: form.value.name,
       description: form.value.description,
@@ -42,9 +40,12 @@ export class AddRecipeComponent implements OnInit {
       notes: form.value.notes,
     };
 
+
     this.recipeService.addRecipe(newRecipe).subscribe((response: any) => {
+      this.recipeService.addIngredients(response['_id'], this.parseIngredients(form.value.ingredients)).subscribe();
       this.router.navigateByUrl(`/recipes/${response['_id']}`);
     });
+
   }
 
   back() {
@@ -52,6 +53,6 @@ export class AddRecipeComponent implements OnInit {
   }
 
   parseIngredients(ingredients: string) {
-    return parseIngredient(ingredients);
+return parseIngredient(ingredients, { normalizeUOM: true });
   }
 }
