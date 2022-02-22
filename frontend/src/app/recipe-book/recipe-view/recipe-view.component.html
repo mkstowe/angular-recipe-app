@@ -1,33 +1,13 @@
 <div
-  class="
-    recipe-view-wrapper
-    w-full
-    h-full
-    bg-dark/10
-    rounded-2xl
-    p-5
-    flex
-    gap-16 overflow-hidden
-  "
+  class=" recipe-view-wrapper bg-dark/10 rounded-2xl relative flex w-full h-full gap-16 p-5 overflow-hidden"
 >
   <ng-container *ngIf="recipe">
-    <div class="recipe-header w-1/4 h-full flex flex-col items-center">
+    <div class="recipe-header flex flex-col items-center w-1/4 h-full">
       <div
-        class="recipe-img-wrapper w-full pt-full bg-green-600 rounded-xl"
+        class="recipe-img-wrapper pt-full rounded-xl w-full bg-green-600"
       ></div>
       <div
-        class="
-          recipe-summary
-          flex flex-col
-          my-auto
-          justify-between
-          h-1/2
-          max-h-72
-          overflow-y-auto
-          gap-5
-          scrollbar-thin scrollbar-track-transparent scrollbar-thumb-primary-200
-          px-3
-        "
+        class=" recipe-summary h-1/2 max-h-72 scrollbar-thin scrollbar-track-transparent scrollbar-thumb-primary-200 flex flex-col justify-between gap-5 px-3 my-auto overflow-y-auto"
       >
         <h3 class="text-4xl font-extrabold text-center">
           {{ recipe.title }}
@@ -88,68 +68,33 @@
       </div>
     </div>
 
-    <div class="recipe-detail flex-grow pr-16 flex flex-col">
+    <div class="recipe-detail flex flex-col flex-grow pr-16">
       <div
-        class="
-          recipe-ingredients
-          flex flex-col
-          pt-5
-          pb-5
-          border-b-2
-          solid
-          border-dark/30
-          overflow-hidden flex-1
-        "
+        class=" recipe-ingredients solid border-dark/30 flex flex-col flex-1 pt-5 pb-5 overflow-hidden border-b-2"
       >
         <div class="recipe-ingredients-title text-xl font-semibold uppercase">
           Ingredients
         </div>
         <ul
-          class="
-            recipe-ingredient-list
-            w-full
-            px-5
-            pt-3
-            overflow-y-auto
-            scrollbar-track-transparent
-            scrollbar-thumb-primary-200
-            scrollbar-thin
-          "
+          class=" recipe-ingredient-list scrollbar-track-transparent scrollbar-thumb-primary-200 scrollbar-thin w-full px-5 pt-3 overflow-y-auto"
         >
           <li class="ingredient" *ngFor="let ingredient of ingredients">
-              {{ ingredient.quantity }}
-              <ng-container *ngIf="ingredient.quantity2">
-                 - {{ ingredient.quantity2 }}
-              </ng-container>
+            {{ ingredient.quantity }}
+            <ng-container *ngIf="ingredient.quantity2">
+              - {{ ingredient.quantity2 }}
+            </ng-container>
             {{ ingredient.unitOfMeasure }}
             {{ ingredient.description }}
           </li>
         </ul>
       </div>
 
-      <div
-        class="
-          recipe-steps
-          flex flex-col
-          pt-5
-          pb-5
-          flex-1
-        "
-      >
+      <div class="recipe-steps flex flex-col flex-1 pt-5 pb-5">
         <div class="recipe-steps-title text-xl font-semibold uppercase">
           Steps
         </div>
         <ul
-          class="
-            recipe-step-list
-            w-full
-            px-5
-            pt-3
-            overflow-y-auto
-            scrollbar-track-transparent
-            scrollbar-thumb-primary-200
-            scrollbar-thin
-          "
+          class=" recipe-step-list scrollbar-track-transparent scrollbar-thumb-primary-200 scrollbar-thin w-full px-5 pt-3 overflow-y-auto"
         >
           <li class="step">Step 1</li>
           <li class="step">Step 2</li>
@@ -158,28 +103,48 @@
           <li class="step">Step 5</li>
         </ul>
       </div>
-<ng-container *ngIf="recipe.notes">
-      <div class="recipe-notes flex flex-col pt-5 pb-5 border-t-2 border-solid border-dark/30">
-        <div class="recipe-notes-title text-xl font-semibold uppercase">
-          Notes
-        </div>
+      <ng-container *ngIf="recipe.notes">
         <div
-          class="
-            recipe-notes
-            text-lg
-            w-full
-            px-5
-            pt-3
-            overflow-y-auto
-            scrollbar-track-transparent
-            scrollbar-thumb-primary-200
-            scrollbar-thin
-          "
+          class=" recipe-notes border-dark/30 flex flex-col pt-5 pb-5 border-t-2 border-solid"
         >
-          {{ recipe.notes }}
+          <div class="recipe-notes-title text-xl font-semibold uppercase">
+            Notes
+          </div>
+          <div
+            class=" recipe-notes scrollbar-track-transparent scrollbar-thumb-primary-200 scrollbar-thin w-full px-5 pt-3 overflow-y-auto text-lg"
+          >
+            {{ recipe.notes }}
+          </div>
         </div>
-      </div>
       </ng-container>
     </div>
   </ng-container>
+
+  <button
+    #toggleButton
+    (click)="toggleOptions()"
+    class="top-3 right-5 absolute"
+
+    (clickOutside)="closeMenu($event)"
+  >
+    <span class="material-icons-outlined icon">more_horiz</span>
+  </button>
+  <div
+    #optionsMenu
+    class=" options-menu top-14 right-8 border-dark/60 absolute z-50 flex flex-col bg-light border-4 border-solid rounded-md"
+    *ngIf="!isHidden"
+  >
+    <a
+      class="option border-dark/30 border-b-2 border-solid"
+    >
+      <span class="material-icons icon text-xl">settings</span>Edit</a
+    >
+    <a
+      role="button"
+      (click)="deleteRecipe()"
+      class="option"
+    >
+      <span class="material-icons icon text-xl">delete</span>Delete</a
+    >
+  </div>
 </div>

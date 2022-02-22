@@ -91,4 +91,8 @@ html {
   .separator {
     @apply border-t-2 border-solid border-dark/30 my-5;
   }
+
+  .option {
+    @apply hover:bg-dark/10 flex items-center w-full gap-2 py-2 pl-2 pr-12 font-semibold transition-all duration-150 ease-in-out;
+  }
 }

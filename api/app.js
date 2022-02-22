@@ -146,7 +146,6 @@ app.get("/recipes/:recipeId/ingredients", (req, res) => {
  * Purpose: Create array of ingredients
  */
 app.post("/recipes/:recipeId/ingredients", (req, res) => {
-	console.log("1");
 	Recipe.findOne({
 		_id: req.params.recipeId,
 	})
@@ -159,7 +158,6 @@ app.post("/recipes/:recipeId/ingredients", (req, res) => {
 		})
 		.then((canCreateIngredients) => {
 			if (canCreateIngredients) {
-				console.log("2");
 				let ingredients = [];
 				Array.from(req.body).forEach((ingredient) => {
 					let newIngredient = new Ingredient({
@@ -175,7 +173,6 @@ app.post("/recipes/:recipeId/ingredients", (req, res) => {
 
 				Ingredient.insertMany(ingredients)
 					.then((docs) => {
-						console.log("3");
 						res.send(docs);
 					})
 					.catch((e) => {
