@@ -7,8 +7,18 @@ const bodyParser = require("body-parser");
 const multer = require("multer");
 const fs = require("fs");
 const path = require("path");
+const {v4: uuidv4} = require('uuid');
 
-const upload = multer({ dest: "uploads/" });
+var storage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, 'uploads/')
+  },
+  filename: function (req, file, cb) {
+    cb(null,  uuidv4() + "_" + Date.now() + path.extname(file.originalname)) //Appending extension
+  }
+})
+
+var upload = multer({ storage: storage });
 
 // Load middleware
 app.use(bodyParser.json());

@@ -41,7 +41,7 @@
       </ng-container>
     </div>
 
-    <div class="form-field">
+    <div class="form-field mb-5">
       <textarea
         class="textarea"
         ngModel
@@ -50,18 +50,24 @@
       ></textarea>
     </div>
 
-    <input type="file" class="file-input"
-       (change)="onFileSelected($event)" #fileUpload>
+    <input
+      type="file"
+      class="file-input"
+      (change)="onFileSelected($event)"
+      #fileUpload
+    />
 
-<div class="file-upload">
+    <div class="file-upload form-field">
+      <button class="btn mr-5" (click)="fileUpload.click()">Browse</button>
 
-   {{fileName || "No file uploaded yet."}}
+      <div class="inline-flex display-file items-center align-middle h-10">
+      <span class="flex items-center" *ngIf="fileName; else noFile">
+        <span class="mr-2">{{ fileName }}</span> <span class="material-icons-outlined icon text-xl" (click)="removeFile()">close</span>
+      </span>
 
-    <button mat-mini-fab color="primary" class="btn"
-      (click)="fileUpload.click()">
-      Upload
-    </button>
-</div>
+      <ng-template #noFile> No file selected. </ng-template>
+      </div>
+    </div>
 
     <hr class="separator" />
 
@@ -132,7 +138,9 @@
 
     <div class="btns-container">
       <a role="button" (click)="back()" class="btn">Cancel</a>
-      <button class="btn align-end" (click)="submitForm(form)">Create Recipe</button>
+      <button class="btn align-end" (click)="submitForm(form)">
+        Create Recipe
+      </button>
       <ng-container *ngIf="showValidationErrors && titleField.invalid">
         <div class="align-center inline-flex items-center justify-center">
           <p class="text-primary-300" *ngIf="titleField.errors?.['required']">

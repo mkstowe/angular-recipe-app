@@ -11,6 +11,7 @@ import parseIngredient from 'parse-ingredient';
   styleUrls: ['./add-recipe.component.scss'],
 })
 export class AddRecipeComponent implements OnInit {
+  fileSelected: boolean;
   selectedFile: File;
   fileName: String;
   showValidationErrors: boolean;
@@ -42,7 +43,7 @@ export class AddRecipeComponent implements OnInit {
       notes: form.value.notes,
     };
 
-    if (this.selectedFile) {
+    if (this.fileSelected && this.selectedFile) {
       const formData = new FormData();
       formData.append('recipeImage', this.selectedFile);
       this.recipeService.uploadFile(formData).subscribe();
@@ -68,7 +69,13 @@ export class AddRecipeComponent implements OnInit {
   }
 
   onFileSelected(event) {
+    this.fileSelected = true;
     this.selectedFile = event.target.files[0];
     this.fileName = this.selectedFile.name;
+  }
+
+  removeFile() {
+    this.fileSelected = false;
+    this.fileName = "";
   }
 }
