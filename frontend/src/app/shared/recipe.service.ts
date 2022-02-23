@@ -52,4 +52,8 @@ export class RecipeService {
       `recipes/${recipeId}/ingredients/${ingredientId}`
     );
   }
+
+  uploadFile(formData: FormData) {
+    return this.webReqService.post('upload', formData);
+  }
 }

@@ -11,6 +11,8 @@ import parseIngredient from 'parse-ingredient';
   styleUrls: ['./add-recipe.component.scss'],
 })
 export class AddRecipeComponent implements OnInit {
+  selectedFile: File;
+  fileName: String;
   showValidationErrors: boolean;
 
   constructor(
@@ -21,7 +23,7 @@ export class AddRecipeComponent implements OnInit {
 
   ngOnInit(): void {}
 
-  onFormSubmit(form: NgForm) {
+  submitForm(form: NgForm) {
     if (form.invalid) return (this.showValidationErrors = true);
 
     let newRecipe = {
@@ -40,12 +42,21 @@ export class AddRecipeComponent implements OnInit {
       notes: form.value.notes,
     };
 
+    if (this.selectedFile) {
+      const formData = new FormData();
+      formData.append('recipeImage', this.selectedFile);
+      this.recipeService.uploadFile(formData).subscribe();
+    }
 
     this.recipeService.addRecipe(newRecipe).subscribe((response: any) => {
-      this.recipeService.addIngredients(response['_id'], this.parseIngredients(form.value.ingredients)).subscribe();
+      this.recipeService
+        .addIngredients(
+          response['_id'],
+          this.parseIngredients(form.value.ingredients)
+        )
+        .subscribe();
       this.router.navigateByUrl(`/recipes/${response['_id']}`);
     });
-
   }
 
   back() {
@@ -53,6 +64,11 @@ export class AddRecipeComponent implements OnInit {
   }
 
   parseIngredients(ingredients: string) {
-return parseIngredient(ingredients, { normalizeUOM: true });
+    return parseIngredient(ingredients, { normalizeUOM: true });
+  }
+
+  onFileSelected(event) {
+    this.selectedFile = event.target.files[0];
+    this.fileName = this.selectedFile.name;
   }
 }

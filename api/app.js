@@ -6,8 +6,9 @@ const { mongoose } = require("./db/mongoose");
 const bodyParser = require("body-parser");
 const multer = require("multer");
 const fs = require("fs");
+const path = require("path");
 
-const upload = multer({ dest: "./uploads" });
+const upload = multer({ dest: "uploads/" });
 
 // Load middleware
 app.use(bodyParser.json());
@@ -33,7 +34,7 @@ app.use(function (req, res, next) {
 });
 
 // Load mongoose models
-const { Recipe, Ingredient } = require("./db/models");
+const { Recipe, Ingredient, UserImage } = require("./db/models");
 
 /* ROUTE HANDLERS */
 
@@ -69,13 +70,11 @@ app.get("/recipes/:id", (req, res) => {
  * POST /recipes
  * Purpose: Create new recipe
  */
-app.post("/recipes", upload.single("recipeImg"), (req, res) => {
+app.post("/recipes", (req, res) => {
 	let newRecipe = new Recipe({
 		title: req.body.title,
 		tags: req.body.tags,
 		description: req.body.description,
-		img: req.file,
-		ingredients: req.body.ingredients,
 		steps: req.body.steps,
 		notes: req.body.notes,
 		servings: req.body.servings,
@@ -94,7 +93,7 @@ app.post("/recipes", upload.single("recipeImg"), (req, res) => {
  * PATCH /recipes/:id
  * Purpose: Update specified recipe
  */
-app.patch("/recipes/:id", upload.single("recipeImg"), (req, res) => {
+app.patch("/recipes/:id", (req, res) => {
 	Recipe.findOneAndUpdate(
 		{
 			_id: req.params.id,
@@ -271,6 +270,19 @@ app.delete("/recipes/:recipeId/ingredients", (req, res) => {
 				);
 			}
 		});
+});
+
+/**
+ * POST /upload
+ * Purpose: Upload file
+ */
+app.post("/upload", upload.single("recipeImage"), (req, res) => {
+	let newImage = new UserImage({
+		path: req.file.filename,
+	});
+	newImage.save().then((newImageDoc) => {
+		res.send(newImageDoc);
+	});
 });
 
 app.listen(3000, () => {
