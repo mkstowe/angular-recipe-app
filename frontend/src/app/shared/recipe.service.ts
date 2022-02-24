@@ -56,4 +56,8 @@ export class RecipeService {
   uploadFile(formData: FormData) {
     return this.webReqService.post('upload', formData);
   }
+
+  getRecipeImage(imgId: String) {
+    return this.webReqService.get(`uploads/${imgId}`);
+  }
 }

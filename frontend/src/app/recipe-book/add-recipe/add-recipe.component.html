@@ -53,6 +53,7 @@
     <input
       type="file"
       class="file-input"
+      accept="image/*"
       (change)="onFileSelected($event)"
       #fileUpload
     />
@@ -61,11 +62,14 @@
       <button class="btn mr-5" (click)="fileUpload.click()">Browse</button>
 
       <div class="inline-flex display-file items-center align-middle h-10">
-      <span class="flex items-center" *ngIf="fileName; else noFile">
-        <span class="mr-2">{{ fileName }}</span> <span class="material-icons-outlined icon text-xl" (click)="removeFile()">close</span>
-      </span>
+      <div *ngIf="fileSelected; else noFile">
+        <div class="flex items-center" *ngIf="!notAnImage; else noImage">
+          <span class="mr-2">{{ fileName }}</span> <span class="material-icons-outlined icon text-xl" (click)="removeFile()">close</span>
+        </div>
+      </div>
 
-      <ng-template #noFile> No file selected. </ng-template>
+      <ng-template #noImage> <span class="text-primary-300">Unsupported file type</span> </ng-template>
+      <ng-template #noFile> No file selected </ng-template>
       </div>
     </div>
 

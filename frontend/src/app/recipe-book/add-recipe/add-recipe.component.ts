@@ -4,6 +4,7 @@ import { NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
 import { RecipeService } from 'src/app/shared/recipe.service';
 import parseIngredient from 'parse-ingredient';
+import { Types } from 'mongoose';
 
 @Component({
   selector: 'app-add-recipe',
@@ -15,6 +16,7 @@ export class AddRecipeComponent implements OnInit {
   selectedFile: File;
   fileName: String;
   showValidationErrors: boolean;
+  notAnImage: boolean;
 
   constructor(
     private router: Router,
@@ -30,6 +32,7 @@ export class AddRecipeComponent implements OnInit {
     let newRecipe = {
       title: form.value.name,
       description: form.value.description,
+      _imgId: Types.ObjectId,
       prepTime: {
         hours: form.value.prepHours,
         minutes: form.value.prepMinutes,
@@ -46,18 +49,29 @@ export class AddRecipeComponent implements OnInit {
     if (this.fileSelected && this.selectedFile) {
       const formData = new FormData();
       formData.append('recipeImage', this.selectedFile);
-      this.recipeService.uploadFile(formData).subscribe();
+      this.recipeService.uploadFile(formData).subscribe((response: any) => {
+        newRecipe._imgId = response._id;
+        this.recipeService.addRecipe(newRecipe).subscribe((response: any) => {
+          this.recipeService
+            .addIngredients(
+              response['_id'],
+              this.parseIngredients(form.value.ingredients)
+            )
+            .subscribe();
+          this.router.navigateByUrl(`/recipes/${response._id}`);
+        });
+      });
+    } else {
+      this.recipeService.addRecipe(newRecipe).subscribe((response: any) => {
+        this.recipeService
+          .addIngredients(
+            response['_id'],
+            this.parseIngredients(form.value.ingredients)
+          )
+          .subscribe();
+        this.router.navigateByUrl(`/recipes/${response._id}`);
+      });
     }
-
-    this.recipeService.addRecipe(newRecipe).subscribe((response: any) => {
-      this.recipeService
-        .addIngredients(
-          response['_id'],
-          this.parseIngredients(form.value.ingredients)
-        )
-        .subscribe();
-      this.router.navigateByUrl(`/recipes/${response['_id']}`);
-    });
   }
 
   back() {
@@ -70,12 +84,20 @@ export class AddRecipeComponent implements OnInit {
 
   onFileSelected(event) {
     this.fileSelected = true;
-    this.selectedFile = event.target.files[0];
-    this.fileName = this.selectedFile.name;
+
+    let imgTypes = ['jpg', 'jpeg', 'png', 'gif', 'tiff', 'bpg', 'webp'];
+    if (imgTypes.indexOf(event.target.files[0].name.split('.').pop()) === -1) {
+      this.notAnImage = true;
+    } else {
+      this.notAnImage = false;
+      this.selectedFile = event.target.files[0];
+      this.fileName = this.selectedFile.name;
+    }
   }
 
   removeFile() {
     this.fileSelected = false;
-    this.fileName = "";
+    this.notAnImage = false;
+    this.fileName = '';
   }
 }

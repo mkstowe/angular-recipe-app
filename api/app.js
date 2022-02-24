@@ -7,18 +7,19 @@ const bodyParser = require("body-parser");
 const multer = require("multer");
 const fs = require("fs");
 const path = require("path");
-const {v4: uuidv4} = require('uuid');
+const { v4: uuidv4 } = require("uuid");
 
 var storage = multer.diskStorage({
-  destination: function (req, file, cb) {
-    cb(null, 'uploads/')
-  },
-  filename: function (req, file, cb) {
-    cb(null,  uuidv4() + "_" + Date.now() + path.extname(file.originalname)) //Appending extension
-  }
-})
+	destination: function (req, file, cb) {
+		cb(null, "uploads/");
+	},
+	filename: function (req, file, cb) {
+		cb(null, uuidv4() + "_" + Date.now() + path.extname(file.originalname)); //Appending extension
+	},
+});
 
 var upload = multer({ storage: storage });
+app.use('/uploads', express.static('uploads'));
 
 // Load middleware
 app.use(bodyParser.json());
@@ -44,7 +45,7 @@ app.use(function (req, res, next) {
 });
 
 // Load mongoose models
-const { Recipe, Ingredient, UserImage } = require("./db/models");
+const { Recipe, Ingredient, Image } = require("./db/models");
 
 /* ROUTE HANDLERS */
 
@@ -85,6 +86,7 @@ app.post("/recipes", (req, res) => {
 		title: req.body.title,
 		tags: req.body.tags,
 		description: req.body.description,
+		_imgId: req.body._imgId,
 		steps: req.body.steps,
 		notes: req.body.notes,
 		servings: req.body.servings,
@@ -287,11 +289,25 @@ app.delete("/recipes/:recipeId/ingredients", (req, res) => {
  * Purpose: Upload file
  */
 app.post("/upload", upload.single("recipeImage"), (req, res) => {
-	let newImage = new UserImage({
+	let newImage = new Image({
 		path: req.file.filename,
 	});
 	newImage.save().then((newImageDoc) => {
 		res.send(newImageDoc);
+	});
+});
+
+/**
+ * GET /uploads/:imgId
+ * Purpose: Get specified image
+ */
+app.get("/uploads/:imgId", (req, res) => {
+	Image.findOne({
+		_id: req.params.imgId,
+	}).then((img) => {
+		if(img) {
+			res.send(img);
+		}
 	});
 });
 
