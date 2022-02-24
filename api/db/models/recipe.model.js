@@ -12,7 +12,9 @@ const RecipeSchema = new mongoose.Schema({
     _imgId: {
         type: mongoose.Types.ObjectId
     },
-    steps: [String],
+    steps: [{
+        description: String
+    }],
     prepTime: Object,
     cookTime: Object,
     servings: Number,

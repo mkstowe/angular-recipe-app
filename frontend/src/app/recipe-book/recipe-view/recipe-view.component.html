@@ -142,12 +142,11 @@
             pt-3
             overflow-y-auto
           "
+          *ngFor="let step of recipe.steps"
         >
-          <li class="step">Step 1</li>
-          <li class="step">Step 2</li>
-          <li class="step">Step 3</li>
-          <li class="step">Step 4</li>
-          <li class="step">Step 5</li>
+          <li class="step" *ngIf="step['description']">
+              {{ step["description"] }}
+          </li>
         </ul>
       </div>
       <ng-container *ngIf="recipe.notes">
