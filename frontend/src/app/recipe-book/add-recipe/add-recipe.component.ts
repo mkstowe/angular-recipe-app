@@ -33,7 +33,10 @@ export class AddRecipeComponent implements OnInit {
       title: form.value.name,
       description: form.value.description,
       _imgId: Types.ObjectId,
-      steps: form.value.steps.split('\n').map(step => ({description: step})),
+      steps: form.value.steps
+        .split('\n')
+        .filter((o) => o)
+        .map((step) => ({ description: step })),
       prepTime: {
         hours: form.value.prepHours,
         minutes: form.value.prepMinutes,

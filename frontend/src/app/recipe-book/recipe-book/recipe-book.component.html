@@ -1,11 +1,11 @@
 <div class="recipe-book-wrapper flex w-full h-full gap-12">
-  <div class="max-h-100 container flex flex-col w-1/5 gap-5">
+  <div class="max-h-100 container flex flex-col basis-1/5 gap-5">
     <div class="btns-container justify-between mt-1 px-5">
       <a>
-      <span class="material-icons-outlined icon">sort</span>
+        <span class="material-icons-outlined icon">sort</span>
       </a>
       <a routerLink="/recipes/add">
-      <span class="material-icons-outlined icon">add</span>
+        <span class="material-icons-outlined icon">add</span>
       </a>
     </div>
     <div
@@ -17,7 +17,7 @@
         px-5
         pb-5
         overflow-y-auto
-        scrollbar-thin scrollbar-track-transparent scrollbar-thumb-primary-200
+        styled-scrollbar
       "
     >
       <ng-container *ngIf="!recipesEmpty">
@@ -39,7 +39,7 @@
     </div>
   </div>
 
-  <div class="flex-grow">
+  <div class="flex-grow basis-4/5">
     <app-recipe-view
       *ngIf="recipe"
       class="w-full"

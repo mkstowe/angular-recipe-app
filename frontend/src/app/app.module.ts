@@ -13,9 +13,8 @@ import { AddRecipeComponent } from './recipe-book/add-recipe/add-recipe.componen
 import { FormsModule, NgForm } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { ClickOutsideDirective } from './click-outside.directive';
-
-
+import { ClickOutsideDirective } from './directives/click-outside.directive';
+import { AngularSplitModule } from 'angular-split';
 
 @NgModule({
   declarations: [
@@ -29,7 +28,14 @@ import { ClickOutsideDirective } from './click-outside.directive';
     AddRecipeComponent,
     ClickOutsideDirective,
   ],
-  imports: [BrowserModule, AppRoutingModule, FormsModule, HttpClientModule, BrowserAnimationsModule],
+  imports: [
+    BrowserModule,
+    AppRoutingModule,
+    FormsModule,
+    HttpClientModule,
+    BrowserAnimationsModule,
+    AngularSplitModule,
+  ],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

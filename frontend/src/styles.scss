@@ -21,6 +21,21 @@ html {
   min-height: 100px;
 }
 
+.as-split-gutter {
+  transition: all 100ms;
+  background-color: rgb(12 22 24 / 0.15) !important;
+  flex-basis: 3px !important;
+
+  &:hover {
+    background-color: rgb(12 22 24 / 0.3) !important;
+    flex-basis: 4px !important;
+  }
+
+  .as-split-gutter-icon {
+    background-image: none !important;
+  }
+}
+
 @layer components {
   .tab {
     @apply hover:text-light/90 active:text-light/80 after:bg-light after:hover:bg-light/90 after:active:bg-light/80 duration-200;
@@ -94,5 +109,13 @@ html {
 
   .option {
     @apply hover:bg-dark/10 flex items-center w-full gap-2 py-2 pl-2 pr-12 font-semibold transition-all duration-150 ease-in-out;
+  }
+
+  .styled-scroll {
+    @apply scrollbar-thin scrollbar-track-transparent scrollbar-thumb-primary-200;
+  }
+
+  .overflow-fade {
+    @apply before:content-none before:w-full before:h-full before:absolute before:left-0 before:top-0;
   }
 }

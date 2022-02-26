@@ -1,4 +1,11 @@
-import { Component, ElementRef, Input, OnInit, Renderer2, ViewChild } from '@angular/core';
+import {
+  Component,
+  ElementRef,
+  Input,
+  OnInit,
+  Renderer2,
+  ViewChild,
+} from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Recipe } from 'src/app/shared/models/recipe.model';
 import { RecipeService } from 'src/app/shared/recipe.service';
@@ -21,25 +28,27 @@ export class RecipeViewComponent implements OnInit {
     private recipeService: RecipeService,
     private route: ActivatedRoute,
     private router: Router
-  ) {
-  }
+  ) {}
 
   ngOnInit(): void {
     this.route.paramMap.subscribe((params) => {
       if (params.get('recipeId')) {
-
         this.selectedRecipeId = params.get('recipeId') as string;
         this.recipeService
-        .getRecipe(this.selectedRecipeId)
-        .subscribe((recipe: any) => {
-          this.recipe = recipe[0];
-          if (this.recipe._imgId) {
-          this.recipeService.getRecipeImage(this.recipe._imgId).subscribe((img: any) => {
-            if (img) {
-              this.imgPath = "http://localhost:3000/uploads/" + img.path;
+          .getRecipe(this.selectedRecipeId)
+          .subscribe((recipe: any) => {
+            this.recipe = recipe[0];
+            if (this.recipe._imgId) {
+              this.recipeService
+                .getRecipeImage(this.recipe._imgId)
+                .subscribe((img: any) => {
+                  if (img) {
+                    this.imgPath = 'http://localhost:3000/uploads/' + img.path;
+                  }
+                });
+            } else {
+              this.imgPath = '';
             }
-          });
-        }
           });
 
         this.recipeService
@@ -60,8 +69,10 @@ export class RecipeViewComponent implements OnInit {
   }
 
   deleteRecipe() {
-    this.recipeService.deleteRecipe(this.recipe['_id']).subscribe((res: any) => {
-      this.router.navigate(['/recipes']);
-    });
+    this.recipeService
+      .deleteRecipe(this.recipe['_id'])
+      .subscribe((res: any) => {
+        this.router.navigate(['/recipes']);
+      });
   }
 }
