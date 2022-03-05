@@ -173,9 +173,13 @@ app.post("/recipes/:recipeId/ingredients", (req, res) => {
 				Array.from(req.body).forEach((ingredient) => {
 					let newIngredient = new Ingredient({
 						_recipeId: req.params.recipeId,
+						input: ingredient.input,
 						quantity: ingredient.quantity,
 						quantity2: ingredient.quantity2,
-						unitOfMeasure: ingredient.unitOfMeasure,
+						unit: ingredient.unit,
+						unitPlural: ingredient.unitPlural,
+						unitShort: ingredient.unitShort,
+						unitEntered: ingredient.unitEntered,
 						description: ingredient.description,
 						isGroupHeader: ingredient.isGroupHeader,
 					});

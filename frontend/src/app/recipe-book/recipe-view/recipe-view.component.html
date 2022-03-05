@@ -116,35 +116,18 @@
                       sticky
                       top-0
                       bg-light2
-                      mr-5
                       p-1
                     "
                   >
                     Ingredients
                   </div>
 
-                  <ul
-                    class="
-                      recipe-ingredient-list
-                      styled-scroll
-                      pl-8
-                      pr-5
-                      pb-5
-                      overflow-y-auto
-                    "
-                  >
-                    <li
-                      class="ingredient"
-                      *ngFor="let ingredient of ingredients"
-                    >
-                      {{ ingredient.quantity }}
-                      <ng-container *ngIf="ingredient.quantity2">
-                        - {{ ingredient.quantity2 }}
-                      </ng-container>
-                      {{ ingredient.unitOfMeasure }}
-                      {{ ingredient.description }}
-                    </li>
-                  </ul>
+                  <table class="recipe-ingredient-table styled-scroll pl-8 pr-5 pb-5 mt-3 overflow-y-scroll table-auto w-full">
+                    <tr class="ingredient h-10 odd:bg-dark/5" *ngFor="let ingredient of ingredients">
+                      <td class="text-center px-5 min-w-max">{{ ingredient.quantity }} <ng-container *ngIf="ingredient.quantity2"> - {{ ingredient.quantity2 }}</ng-container> <ng-container *ngIf="ingredient.unit">{{ ingredient.unit }}</ng-container></td>
+                      <td>{{ ingredient.description }}</td>
+                    </tr>
+                  </table>
                 </div>
               </div>
             </as-split-area>
@@ -160,7 +143,6 @@
                       sticky
                       top-0
                       bg-light2
-                      mr-5
                       p-1
                     "
                   >
@@ -173,6 +155,7 @@
                       w-[95%]
                       px-5
                       pt-3
+                      mt-3
                       overflow-y-auto
                       text-lg
                     "
@@ -195,7 +178,6 @@
                 sticky
                 top-0
                 bg-light2
-                mr-5
                 p-1
               "
             >
@@ -209,6 +191,7 @@
                 px-5
                 overflow-y-scroll
                 list-decimal
+                mt-3
               "
             >
               <li class="step" *ngFor="let step of recipe.steps">
@@ -241,8 +224,10 @@
         bg-light
         border-2 border-solid
         rounded-md
+        transition-opacity
+        duration-100
       "
-      *ngIf="!isHidden"
+      [ngClass]="this.isHidden ? 'opacity-0' : 'opacity-100'"
     >
       <a class="option border-dark/30 border-b-2 border-solid">
         <span class="material-icons icon text-xl">settings</span>Edit</a

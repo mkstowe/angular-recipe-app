@@ -83,7 +83,7 @@ export class AddRecipeComponent implements OnInit {
   }
 
   parseIngredients(ingredients: string) {
-    return parseIngredient(ingredients, { normalizeUOM: true });
+    return parseIngredient(ingredients);
   }
 
   onFileSelected(event) {

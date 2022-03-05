@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Params } from '@angular/router';
 import { Recipe } from 'src/app/shared/models/recipe.model';
 import { RecipeService } from 'src/app/shared/recipe.service';
@@ -13,6 +13,8 @@ export class RecipeBookComponent implements OnInit {
   selectedRecipeId: string;
   recipe: Recipe;
   recipesEmpty: boolean;
+  sidebarHidden: boolean = false;
+  @ViewChild("sidebar") sidebar: ElementRef;
 
   constructor(
     private recipeService: RecipeService,
@@ -39,5 +41,9 @@ export class RecipeBookComponent implements OnInit {
         this.recipesEmpty = true;
       }
     });
+  }
+
+  toggleSidebar() {
+    this.sidebarHidden = !this.sidebarHidden;
   }
 }

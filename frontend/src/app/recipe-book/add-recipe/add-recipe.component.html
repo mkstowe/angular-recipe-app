@@ -21,7 +21,7 @@
       w-1/2
       pr-5
       overflow-y-auto
-      styled-scrollbar
+      styled-scroll
     "
   >
     <div class="form-field mb-5">
@@ -147,18 +147,19 @@
       ></textarea>
     </div>
 
-    <div class="btns-container">
-      <a role="button" (click)="back()" class="btn">Cancel</a>
-      <button class="btn align-end" (click)="submitForm(form)">
-        Create Recipe
-      </button>
-      <ng-container *ngIf="showValidationErrors && titleField.invalid">
-        <div class="align-center inline-flex items-center justify-center">
-          <p class="text-primary-300" *ngIf="titleField.errors?.['required']">
-            Please fix errors
-          </p>
-        </div>
-      </ng-container>
-    </div>
   </form>
+
+  <div class="btns-container">
+    <a role="button" (click)="back()" class="btn">Cancel</a>
+    <button class="btn align-end" (click)="submitForm(form)">
+      Create Recipe
+    </button>
+    <ng-container *ngIf="showValidationErrors && titleField.invalid">
+      <div class="align-center inline-flex items-center justify-center">
+        <p class="text-primary-300" *ngIf="titleField.errors?.['required']">
+          Please fix errors
+        </p>
+      </div>
+    </ng-container>
+  </div>
 </div>

@@ -5,10 +5,20 @@ const IngredientSchema = new mongoose.Schema({
         type: mongoose.Types.ObjectId,
         required: true
     },
-    quantity: Number,
-    quantity2: Number,
-    unitOfMeasure: String,
-    description: String,
+    input: {
+        type: String,
+        default: ''
+    },
+    quantity: Number | null,
+    quantity2: Number | null,
+    unit: String | null,
+    unitPlural: String | null ,
+    unitShort: String | null,
+    unitEntered: String | null,
+    description: {
+        type: String,
+        default: ''
+    },
     isGroupHeader: {
         type: Boolean,
         default: false

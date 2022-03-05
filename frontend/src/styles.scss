@@ -118,4 +118,12 @@ html {
   .overflow-fade {
     @apply before:content-none before:w-full before:h-full before:absolute before:left-0 before:top-0;
   }
+
+  .tooltip {
+    @apply opacity-0 absolute transition-opacity duration-200 z-50 delay-[0] rounded shadow-lg px-2 py-1 bg-dark/90 text-light min-w-max -mt-8;
+  }
+
+  .has-tooltip:hover .tooltip {
+    @apply opacity-100 delay-500;
+  }
 }
