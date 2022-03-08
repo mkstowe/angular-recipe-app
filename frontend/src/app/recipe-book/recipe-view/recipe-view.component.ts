@@ -19,7 +19,7 @@ export class RecipeViewComponent implements OnInit {
   @ViewChild('toggleButton') toggleButton: ElementRef;
   @ViewChild('optionsMenu') menu: ElementRef;
   @Input() recipe: Recipe;
-  imgPath: String;
+  imgPath: string;
   ingredients: any[];
   selectedRecipeId: string;
   isHidden = true;
@@ -31,9 +31,9 @@ export class RecipeViewComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.route.paramMap.subscribe((params) => {
-      if (params.get('recipeId')) {
-        this.selectedRecipeId = params.get('recipeId') as string;
+    this.route.params.subscribe((params) => {
+      if (params['recipeId']) {
+        this.selectedRecipeId = params['recipeId'];
         this.recipeService
           .getRecipe(this.selectedRecipeId)
           .subscribe((recipe: any) => {

@@ -19,7 +19,7 @@ var storage = multer.diskStorage({
 });
 
 var upload = multer({ storage: storage });
-app.use('/uploads', express.static('uploads'));
+app.use("/uploads", express.static("uploads"));
 
 // Load middleware
 app.use(bodyParser.json());
@@ -61,7 +61,7 @@ app.get("/recipes", (req, res) => {
 			res.send(recipes);
 		})
 		.catch((e) => {
-			res.send(e);
+			res.sendStatus(404).send(e);
 		});
 });
 
@@ -74,7 +74,9 @@ app.get("/recipes/:id", (req, res) => {
 		_id: req.params.id,
 	}).then((recipe) => {
 		res.send(recipe);
-	});
+	}).catch(e => {
+		res.sendStatus(404).send(e);
+	})
 });
 
 /**
@@ -86,7 +88,7 @@ app.post("/recipes", (req, res) => {
 		title: req.body.title,
 		tags: req.body.tags,
 		description: req.body.description,
-		_imgId: req.body._imgId,
+		_imgId: req.body._imgId | null,
 		steps: req.body.steps,
 		notes: req.body.notes,
 		servings: req.body.servings,
@@ -149,6 +151,8 @@ app.get("/recipes/:recipeId/ingredients", (req, res) => {
 		_recipeId: req.params.recipeId,
 	}).then((ingredients) => {
 		res.send(ingredients);
+	}).catch((e) => {
+		res.sendStatus(404).send(e);
 	});
 });
 
@@ -234,6 +238,56 @@ app.patch("/recipes/:recipeId/ingredients/:ingredientId", (req, res) => {
 });
 
 /**
+ * PATCH /recipes/:recipeId/ingredients
+ * Purpose: Replace all ingredients for specified recipe
+ */
+app.patch("/recipes/:recipeId/ingredients", (req, res) => {
+	Recipe.findOne({
+		_id: req.params.recipeId,
+	})
+		.then((recipe) => {
+			if (recipe) {
+				return true;
+			}
+
+			return false;
+		})
+		.then((canUpdateIngredients) => {
+			if (canUpdateIngredients) {
+				let ingredients = [];
+				Array.from(req.body).forEach((ingredient) => {
+					let newIngredient = new Ingredient({
+						_recipeId: req.params.recipeId,
+						input: ingredient.input,
+						quantity: ingredient.quantity,
+						quantity2: ingredient.quantity2,
+						unit: ingredient.unit,
+						unitPlural: ingredient.unitPlural,
+						unitShort: ingredient.unitShort,
+						unitEntered: ingredient.unitEntered,
+						description: ingredient.description,
+						isGroupHeader: ingredient.isGroupHeader,
+					});
+					ingredients.push(newIngredient);
+				});
+
+				Ingredient.deleteMany({ _recipeId: req.params.recipeId }).then(
+					(response) => {}
+				);
+				Ingredient.insertMany(ingredients)
+					.then((docs) => {
+						res.send(docs);
+					})
+					.catch((e) => {
+						res.status(500).send(e);
+					});
+			} else {
+				res.sendStatus(404);
+			}
+		});
+});
+
+/**
  * DELETE /recipes/:recipeId/ingredients/:ingredientId
  * Purpose: Delete specified ingredient
  */
@@ -284,6 +338,8 @@ app.delete("/recipes/:recipeId/ingredients", (req, res) => {
 						res.send({ message: "All ingredients deleted" });
 					}
 				);
+			} else {
+				res.sendStatus(404);
 			}
 		});
 });
@@ -309,11 +365,33 @@ app.get("/uploads/:imgId", (req, res) => {
 	Image.findOne({
 		_id: req.params.imgId,
 	}).then((img) => {
-		if(img) {
+		if (img) {
 			res.send(img);
 		}
-	});
+	}).catch((e) => {
+		res.sendStatus(404);
+	})
 });
+
+/**
+ * DELETE /uploads/:imgId
+ * Purpose: Delete specified image
+ */
+app.delete("/uploads/:imgId", (req, res) => {
+	console.log(req.params.imgId);
+
+	Image.findOneAndRemove({
+		_id: req.params.imgId,
+	}).then((img) => {
+		if (img) {
+			console.log(img.path);
+			fs.unlink(img.path);
+			res.send("image successfully deleted");
+		} else {
+			res.sendStatus(404);
+		}
+	})
+})
 
 app.listen(3000, () => {
 	console.log("Server is listening on port 3000");

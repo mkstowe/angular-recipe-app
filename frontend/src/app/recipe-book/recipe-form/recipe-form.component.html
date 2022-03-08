@@ -1,0 +1,184 @@
+<div
+  class="
+    recipe-form-wrapper
+    flex flex-col
+    items-center
+    content-center
+    justify-center
+    w-full
+    h-full
+  "
+>
+  <h2 class="text-dark/80 inline-block text-3xl font-bold" *ngIf="!editMode">New Recipe</h2>
+  <h2 class="text-dark/80 inline-block text-3xl font-bold" *ngIf="editMode">Edit Recipe</h2>
+
+  <form
+    [formGroup]="form"
+    (ngSubmit)="submit()"
+    class="
+      h-5/6
+      mt-7
+      flex flex-col
+      content-center
+      w-1/2
+      pr-5
+      overflow-y-auto
+      styled-scroll
+    "
+  >
+    <div class="form-field mb-5">
+      <input
+        type="text"
+        class="textbox"
+        name="name"
+        formControlName="name"
+        placeholder="Recipe Name"
+      />
+      <ng-container *ngIf="showValidationErrors && f['name'].hasError('required')">
+          <p class="error text-primary-300">Please enter a recipe name</p>
+        </ng-container>
+    </div>
+
+    <div class="form-field mb-5">
+      <textarea
+        name="description"
+        formControlName="description"
+        class="textarea"
+        placeholder="Description"
+      ></textarea>
+    </div>
+
+    <input
+      type="file"
+      class="file-input"
+      accept="image/*"
+      (change)="onFileSelected($event)"
+      #fileUpload
+    />
+
+    <div class="file-upload form-field">
+      <button type="button" class="btn mr-5" (click)="fileUpload.click()">Browse</button>
+
+      <div class="inline-flex display-file items-center align-middle h-10">
+        <div *ngIf="fileSelected; else noFile">
+          <div class="flex items-center" *ngIf="!notAnImage; else noImage">
+            <span class="mr-2">{{ fileName }}</span>
+            <span
+              class="material-icons-outlined icon text-xl"
+              (click)="removeFile()"
+              >close</span
+            >
+          </div>
+        </div>
+
+        <ng-template #noImage>
+          <span class="text-primary-300">Unsupported file type</span>
+        </ng-template>
+        <ng-template #noFile>No file selected</ng-template>
+      </div>
+    </div>
+
+    <hr class="separator" />
+
+    <div class="form-field mb-5">
+      <textarea
+        name="ingredients"
+        formControlName="ingredients"
+        class="textarea"
+        placeholder="Ingredients (one per line)"
+      ></textarea>
+    </div>
+
+    <div class="form-field">
+      <textarea
+        name="steps"
+        formControlName="steps"
+        class="textarea"
+        placeholder="Steps (one per line)"
+      ></textarea>
+    </div>
+
+    <hr class="separator" />
+
+    <div class="form-field mb-5">
+      <h3 class="form-field-label">Prep Time</h3>
+      <input
+        type="number"
+        formControlName="prepHours"
+        name="prepHours"
+        class="input-box"
+      />
+      <span class="input-box-label mr-5">Hours</span>
+
+      <input
+        type="number"
+        class="input-box"
+        name="prepMinutes"
+        formControlName="prepMinutes"
+      />
+      <span class="input-box-label mr-5">Minutes</span>
+    </div>
+
+    <div class="form-field">
+      <h3 class="form-field-label">Cook Time</h3>
+      <input
+        type="number"
+        formControlName="cookHours"
+        class="input-box"
+        name="cookHours"
+      />
+      <span class="input-box-label mr-5">Hours</span>
+
+      <input
+        formControlName="cookMinutes"
+        type="number"
+        class="input-box"
+        name="cookMinutes"
+      />
+      <span class="input-box-label">Minutes</span>
+    </div>
+
+    <hr class="separator" />
+
+    <div class="form-field mb-5">
+      <h3 class="form-field-label">Number of Servings:</h3>
+      <input
+        formControlName="servings"
+        type="number"
+        class="input-box w-32"
+        name="servings"
+      />
+    </div>
+
+    <div class="form-field">
+      <h3 class="form-field-label">Calories:</h3>
+      <input
+        type="number"
+        formControlName="calories"
+        class="input-box w-32"
+        name="calories"
+      />
+    </div>
+
+    <hr class="separator" />
+
+    <div class="form-field">
+      <textarea
+        name="notes"
+        formControlName="notes"
+        class="textarea"
+        placeholder="Notes"
+      ></textarea>
+    </div>
+</form>
+
+    <div class="btns-container">
+      <a (click)="back()" class="btn" role="button">Cancel</a>
+      <button *ngIf="!editMode" class="btn align-end" type="submit" (click)="submit()">Create Recipe</button>
+      <button *ngIf="editMode" class="btn align-end" type="submit" (click)="submit()">Update Recipe</button>
+    </div>
+
+    <ng-container *ngIf="showValidationErrors && form.invalid">
+      <p class="error text-primary-300 self-center absolute bottom-3">Please fix errors</p>
+    </ng-container>
+</div>

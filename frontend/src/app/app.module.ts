@@ -9,12 +9,12 @@ import { RecipeViewComponent } from './recipe-book/recipe-view/recipe-view.compo
 import { RecipeCardComponent } from './recipe-book/recipe-card/recipe-card.component';
 import { ShoppingListComponent } from './shopping-list/shopping-list/shopping-list.component';
 import { NavbarComponent } from './navbar/navbar.component';
-import { AddRecipeComponent } from './recipe-book/add-recipe/add-recipe.component';
-import { FormsModule, NgForm } from '@angular/forms';
+import { ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ClickOutsideDirective } from './directives/click-outside.directive';
 import { AngularSplitModule } from 'angular-split';
+import { RecipeFormComponent } from './recipe-book/recipe-form/recipe-form.component';
 
 @NgModule({
   declarations: [
@@ -25,16 +25,16 @@ import { AngularSplitModule } from 'angular-split';
     RecipeCardComponent,
     ShoppingListComponent,
     NavbarComponent,
-    AddRecipeComponent,
     ClickOutsideDirective,
+    RecipeFormComponent,
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
-    FormsModule,
     HttpClientModule,
     BrowserAnimationsModule,
     AngularSplitModule,
+    ReactiveFormsModule,
   ],
   bootstrap: [AppComponent],
 })

@@ -229,7 +229,7 @@
       "
       [ngClass]="this.isHidden ? 'opacity-0' : 'opacity-100'"
     >
-      <a class="option border-dark/30 border-b-2 border-solid">
+      <a [routerLink]="['edit']" class="option border-dark/30 border-b-2 border-solid">
         <span class="material-icons icon text-xl">settings</span>Edit</a
       >
       <a role="button" (click)="deleteRecipe()" class="option">
