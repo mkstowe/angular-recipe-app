@@ -88,7 +88,7 @@ app.post("/recipes", (req, res) => {
 		title: req.body.title,
 		tags: req.body.tags,
 		description: req.body.description,
-		_imgId: req.body._imgId | null,
+		_imgId: req.body._imgId,
 		steps: req.body.steps,
 		notes: req.body.notes,
 		servings: req.body.servings,

@@ -47,6 +47,10 @@ export class RecipeService {
     );
   }
 
+  updateIngredients(recipeId: string, payload: Object) {
+    return this.webReqService.patch(`recipes/${recipeId}/ingredients`, payload);
+  }
+
   deleteIngredient(recipeId: String, ingredientId: String) {
     return this.webReqService.delete(
       `recipes/${recipeId}/ingredients/${ingredientId}`

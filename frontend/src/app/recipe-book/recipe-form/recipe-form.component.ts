@@ -130,7 +130,7 @@ export class RecipeFormComponent implements OnInit {
     let newRecipe = {
       title: this.form.get('name')?.value,
       description: this.form.get('description')?.value,
-      imgId: null,
+      _imgId: null,
       steps: this.form
         .get('steps')
         ?.value.split('\n')
@@ -153,7 +153,7 @@ export class RecipeFormComponent implements OnInit {
       const formData = new FormData();
       formData.append('recipeImage', this.selectedFile);
       this.recipeService.uploadFile(formData).subscribe((response: any) => {
-        newRecipe.imgId = response._id;
+        newRecipe._imgId = response._id;
         if (!this.editMode) {
           this.submitRecipe(newRecipe);
         } else {
@@ -161,7 +161,7 @@ export class RecipeFormComponent implements OnInit {
         }
       });
     } else {
-      newRecipe.imgId = null;
+      newRecipe._imgId = null;
       if (!this.editMode) {
         this.submitRecipe(newRecipe);
       } else {
@@ -171,7 +171,6 @@ export class RecipeFormComponent implements OnInit {
   }
 
   submitRecipe(newRecipe) {
-    console.log(newRecipe._imgId)
     this.recipeService.addRecipe(newRecipe).subscribe((response: any) => {
       this.recipeService
         .addIngredients(
@@ -184,7 +183,6 @@ export class RecipeFormComponent implements OnInit {
   }
 
   updateRecipe(newRecipe) {
-    console.log('here');
     this.recipeService
       .updateRecipe(this.selectedRecipeId, newRecipe)
       .subscribe((response: any) => {
