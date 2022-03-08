@@ -72,11 +72,13 @@ app.get("/recipes", (req, res) => {
 app.get("/recipes/:id", (req, res) => {
 	Recipe.find({
 		_id: req.params.id,
-	}).then((recipe) => {
-		res.send(recipe);
-	}).catch(e => {
-		res.sendStatus(404).send(e);
 	})
+		.then((recipe) => {
+			res.send(recipe);
+		})
+		.catch((e) => {
+			res.sendStatus(404).send(e);
+		});
 });
 
 /**
@@ -149,11 +151,13 @@ app.delete("/recipes", (req, res) => {
 app.get("/recipes/:recipeId/ingredients", (req, res) => {
 	Ingredient.find({
 		_recipeId: req.params.recipeId,
-	}).then((ingredients) => {
-		res.send(ingredients);
-	}).catch((e) => {
-		res.sendStatus(404).send(e);
-	});
+	})
+		.then((ingredients) => {
+			res.send(ingredients);
+		})
+		.catch((e) => {
+			res.sendStatus(404).send(e);
+		});
 });
 
 /**
@@ -364,13 +368,15 @@ app.post("/upload", upload.single("recipeImage"), (req, res) => {
 app.get("/uploads/:imgId", (req, res) => {
 	Image.findOne({
 		_id: req.params.imgId,
-	}).then((img) => {
-		if (img) {
-			res.send(img);
-		}
-	}).catch((e) => {
-		res.sendStatus(404);
 	})
+		.then((img) => {
+			if (img) {
+				res.send(img);
+			}
+		})
+		.catch((e) => {
+			res.sendStatus(404);
+		});
 });
 
 /**
@@ -378,20 +384,22 @@ app.get("/uploads/:imgId", (req, res) => {
  * Purpose: Delete specified image
  */
 app.delete("/uploads/:imgId", (req, res) => {
-	console.log(req.params.imgId);
-
 	Image.findOneAndRemove({
 		_id: req.params.imgId,
 	}).then((img) => {
 		if (img) {
-			console.log(img.path);
-			fs.unlink(img.path);
-			res.send("image successfully deleted");
+			fs.unlink("uploads/" + img.path, (err) => {
+				if (err) {
+					console.log(err);
+					return;
+				}
+			});
+			res.send({ message: "image successfully deleted" });
 		} else {
 			res.sendStatus(404);
 		}
-	})
-})
+	});
+});
 
 app.listen(3000, () => {
 	console.log("Server is listening on port 3000");

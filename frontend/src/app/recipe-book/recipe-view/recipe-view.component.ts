@@ -69,9 +69,13 @@ export class RecipeViewComponent implements OnInit {
   }
 
   deleteRecipe() {
+    if (this.recipe._imgId) {
+      this.recipeService.deleteFile(this.recipe['_imgId']).subscribe();
+    }
+
     this.recipeService
       .deleteRecipe(this.recipe['_id'])
-      .subscribe((res: any) => {
+      .subscribe(() => {
         this.router.navigate(['/recipes']);
       });
   }

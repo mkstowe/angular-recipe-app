@@ -64,4 +64,8 @@ export class RecipeService {
   getRecipeImage(imgId: String) {
     return this.webReqService.get(`uploads/${imgId}`);
   }
+
+  deleteFile(imgId: String) {
+    return this.webReqService.delete(`uploads/${imgId}`);
+  }
 }
