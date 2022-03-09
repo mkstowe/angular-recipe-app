@@ -9,39 +9,28 @@
       </a>
       <div class="has-tooltip">
         <span class="tooltip ml-5">Add Recipe</span>
-      <a routerLink="/recipes/add" class="has-tooltip">
-        <span class="material-icons-outlined icon">add</span>
-      </a>
+        <a routerLink="/recipes/add" class="has-tooltip">
+          <span class="material-icons-outlined icon">add</span>
+        </a>
       </div>
     </div>
     <div
-      class="
-        recipe-list-wrapper
-        flex flex-col flex-grow
-        w-full
-        gap-5
-        px-5
-        pb-5
-        overflow-y-scroll
-        overflow-x-hidden
-        styled-scroll
-      "
+      class="recipe-list-wrapper flex flex-col flex-grow w-full gap-5 px-5 pb-5 overflow-y-scroll overflow-x-hidden styled-scroll"
     >
       <ng-container *ngIf="!recipesEmpty">
-        <a
-          routerLinkActive="selected bg-dark/10 hover:bg-dark/10"
-          class="w-full hover:bg-dark/5 transition-all duration-75 ease-in"
-          [routerLink]="['/recipes', recipe._id]"
-          *ngFor="let recipe of recipes"
-        >
-          <app-recipe-card [recipe]="recipe"></app-recipe-card>
-        </a>
+        <ng-container *ngFor="let recipe of recipes">
+          <a
+            routerLinkActive="selected bg-dark/10 hover:bg-dark/10"
+            class="w-full hover:bg-dark/5 transition-all duration-75 ease-in"
+            [routerLink]="['/recipes', recipe._id]"
+          >
+            <app-recipe-card [recipe]="recipe"></app-recipe-card>
+          </a>
+        </ng-container>
       </ng-container>
 
       <ng-container *ngIf="recipesEmpty">
-        <div class="w-full h-full text-dark/50 text-center text-lg">
-          No Recipes Saved
-        </div>
+        <div class="w-full h-full text-dark/50 text-center text-lg">No Recipes Saved</div>
       </ng-container>
     </div>
   </div>
@@ -50,19 +39,15 @@
     class="btns-container justify-center absolute bottom-2 transition-all duration-150 has-tooltip"
     [ngClass]="this.sidebarHidden ? 'left-5' : 'left-[20%] ml-3'"
   >
-  <span class='tooltip ml-32'>{{ this.sidebarHidden ? "Show Recipes" : "Hide Recipes" }}</span>
+    <span class="tooltip ml-32">{{ this.sidebarHidden ? 'Show Recipes' : 'Hide Recipes' }}</span>
     <a role="button" (click)="toggleSidebar()">
       <span class="material-icons-outlined icon">{{
-        this.sidebarHidden ? "keyboard_double_arrow_right" : "keyboard_double_arrow_left"
+        this.sidebarHidden ? 'keyboard_double_arrow_right' : 'keyboard_double_arrow_left'
       }}</span>
     </a>
   </div>
 
   <div class="flex-grow basis-4/5">
-    <app-recipe-view
-      *ngIf="recipe"
-      class="w-full"
-      [recipe]="recipe"
-    ></app-recipe-view>
+    <app-recipe-view *ngIf="recipe" class="w-full" [recipe]="recipe"></app-recipe-view>
   </div>
 </div>

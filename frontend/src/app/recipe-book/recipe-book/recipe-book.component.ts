@@ -1,5 +1,5 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
-import { ActivatedRoute, Params } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 import { Recipe } from 'src/app/shared/models/recipe.model';
 import { RecipeService } from 'src/app/shared/recipe.service';
 
@@ -9,27 +9,27 @@ import { RecipeService } from 'src/app/shared/recipe.service';
   styleUrls: ['./recipe-book.component.scss'],
 })
 export class RecipeBookComponent implements OnInit {
-  recipes: any[];
-  selectedRecipeId: string;
-  recipe: Recipe;
-  recipesEmpty: boolean;
-  sidebarHidden: boolean = false;
-  @ViewChild("sidebar") sidebar: ElementRef;
+  recipes: Recipe[];
 
-  constructor(
-    private recipeService: RecipeService,
-    private route: ActivatedRoute
-  ) {}
+  selectedRecipeId: string;
+
+  recipe: Recipe;
+
+  recipesEmpty: boolean;
+
+  sidebarHidden: boolean = false;
+
+  @ViewChild('sidebar') sidebar: ElementRef;
+
+  constructor(private recipeService: RecipeService, private route: ActivatedRoute) {}
 
   ngOnInit(): void {
     this.route.paramMap.subscribe((params) => {
       if (params.get('recipeId')) {
         this.selectedRecipeId = params.get('recipeId') as string;
-        this.recipeService
-          .getRecipe(this.selectedRecipeId)
-          .subscribe((recipe: any) => {
-            this.recipe = recipe[0];
-          });
+        this.recipeService.getRecipe(this.selectedRecipeId).subscribe((recipe: any) => {
+          this.recipe = recipe[0];
+        });
       }
     });
 

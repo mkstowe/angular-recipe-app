@@ -1,46 +1,15 @@
 <div
-  class="
-    recipe-view-wrapper
-    bg-light2
-    rounded-2xl
-    relative
-    flex
-    w-full
-    h-full
-    gap-8
-    overflow-hidden
-  "
+  class="recipe-view-wrapper bg-light2 rounded-2xl relative flex w-full h-full gap-8 overflow-hidden"
 >
   <ng-container *ngIf="recipe">
-    <div
-      class="
-        recipe-header
-        flex
-        pb-5
-        flex-col
-        items-center
-        basis-1/3
-        h-full
-        gap-5
-        bg-dark/10
-      "
-    >
+    <div class="recipe-header flex pb-5 flex-col items-center basis-1/3 h-full gap-5 bg-dark/10">
       <div
         *ngIf="imgPath"
         class="bg-cover bg-no-repeat w-full aspect-w-5 aspect-h-3 bg-center"
         [style.background-image]="'url(' + imgPath + ')'"
       ></div>
       <div
-        class="
-          recipe-summary
-          styled-scroll
-          flex flex-col
-          justify-start
-          gap-5
-          px-5
-          my-auto
-          overflow-y-auto
-        "
+        class="recipe-summary styled-scroll flex flex-col justify-start gap-5 px-5 my-auto overflow-y-auto"
       >
         <h3 class="text-4xl font-extrabold text-center">
           {{ recipe.title }}
@@ -57,46 +26,24 @@
           </div>
         </ng-container>
         <div class="recipe-times">
-          <ng-container
-            *ngIf="recipe.prepTime['hours'] || recipe.prepTime['minutes']"
-          >
+          <ng-container *ngIf="recipe.prepTime['hours'] || recipe.prepTime['minutes']">
             <div class="recipe-prep-time text-lg font-semibold text-center">
               PREP TIME:
-              {{
-                recipe.prepTime["hours"] > 0
-                  ? recipe.prepTime["hours"] + " hours"
-                  : ""
-              }}
-              {{
-                recipe.prepTime["minutes"]
-                  ? recipe.prepTime["minutes"] + " minutes"
-                  : ""
-              }}
+              {{ recipe.prepTime['hours'] > 0 ? recipe.prepTime['hours'] + ' hours' : '' }}
+              {{ recipe.prepTime['minutes'] ? recipe.prepTime['minutes'] + ' minutes' : '' }}
             </div>
           </ng-container>
-          <ng-container
-            *ngIf="recipe.cookTime['hours'] || recipe.cookTime['minutes']"
-          >
+          <ng-container *ngIf="recipe.cookTime['hours'] || recipe.cookTime['minutes']">
             <div class="recipe-cook-time text-lg font-semibold text-center">
               COOK TIME:
-              {{
-                recipe.cookTime["hours"] > 0
-                  ? recipe.cookTime["hours"] + " hours"
-                  : ""
-              }}
-              {{
-                recipe.cookTime["minutes"]
-                  ? recipe.cookTime["minutes"] + " minutes"
-                  : ""
-              }}
+              {{ recipe.cookTime['hours'] > 0 ? recipe.cookTime['hours'] + ' hours' : '' }}
+              {{ recipe.cookTime['minutes'] ? recipe.cookTime['minutes'] + ' minutes' : '' }}
             </div>
           </ng-container>
         </div>
 
         <!-- <ng-container *ngIf="recipe.tags"> -->
-        <div class="recipe-tags text-lg font-semibold text-center">
-          Chicken, Pasta, Gluten Free
-        </div>
+        <div class="recipe-tags text-lg font-semibold text-center">Chicken, Pasta, Gluten Free</div>
         <!-- </ng-container> -->
       </div>
     </div>
@@ -108,23 +55,24 @@
             <as-split-area class="styled-scroll mb-5">
               <div>
                 <div class="recipe-ingredients">
-                  <div
-                    class="
-                      text-xl
-                      font-semibold
-                      uppercase
-                      sticky
-                      top-0
-                      bg-light2
-                      p-1
-                    "
-                  >
+                  <div class="text-xl font-semibold uppercase sticky top-0 bg-light2 p-1">
                     Ingredients
                   </div>
 
-                  <table class="recipe-ingredient-table styled-scroll pl-8 pr-5 pb-5 mt-3 overflow-y-scroll table-auto w-full">
-                    <tr class="ingredient h-10 odd:bg-dark/5" *ngFor="let ingredient of ingredients">
-                      <td class="text-center px-5 min-w-max">{{ ingredient.quantity }} <ng-container *ngIf="ingredient.quantity2"> - {{ ingredient.quantity2 }}</ng-container> <ng-container *ngIf="ingredient.unit">{{ ingredient.unit }}</ng-container></td>
+                  <table
+                    class="recipe-ingredient-table styled-scroll pl-8 pr-5 pb-5 mt-3 overflow-y-scroll table-auto w-full"
+                  >
+                    <tr
+                      class="ingredient h-10 odd:bg-dark/5"
+                      *ngFor="let ingredient of ingredients"
+                    >
+                      <td class="text-center px-5 min-w-max">
+                        {{ ingredient.quantity }}
+                        <ng-container *ngIf="ingredient.quantity2">
+                          - {{ ingredient.quantity2 }}</ng-container
+                        >
+                        <ng-container *ngIf="ingredient.unit">{{ ingredient.unit }}</ng-container>
+                      </td>
                       <td>{{ ingredient.description }}</td>
                     </tr>
                   </table>
@@ -135,30 +83,11 @@
             <as-split-area class="styled-scroll mt-5" *ngIf="recipe.notes">
               <ng-container *ngIf="recipe.notes">
                 <div class="recipe-notes">
-                  <div
-                    class="
-                      text-xl
-                      font-semibold
-                      uppercase
-                      sticky
-                      top-0
-                      bg-light2
-                      p-1
-                    "
-                  >
+                  <div class="text-xl font-semibold uppercase sticky top-0 bg-light2 p-1">
                     Notes
                   </div>
                   <div
-                    class="
-                      recipe-notes
-                      styled-scroll
-                      w-[95%]
-                      px-5
-                      pt-3
-                      mt-3
-                      overflow-y-auto
-                      text-lg
-                    "
+                    class="recipe-notes styled-scroll w-[95%] px-5 pt-3 mt-3 overflow-y-auto text-lg"
                   >
                     {{ recipe.notes }}
                   </div>
@@ -170,32 +99,12 @@
 
         <as-split-area class="styled-scroll px-5">
           <div class="recipe-steps">
-            <div
-              class="
-                text-xl
-                font-semibold
-                uppercase
-                sticky
-                top-0
-                bg-light2
-                p-1
-              "
-            >
-              Steps
-            </div>
+            <div class="text-xl font-semibold uppercase sticky top-0 bg-light2 p-1">Steps</div>
             <ul
-              class="
-                recipe-step-list
-                styled-scroll
-                w-[95%]
-                px-5
-                overflow-y-scroll
-                list-decimal
-                mt-3
-              "
+              class="recipe-step-list styled-scroll w-[95%] px-5 overflow-y-scroll list-decimal mt-3"
             >
               <li class="step" *ngFor="let step of recipe.steps">
-                {{ step["description"] }}
+                {{ step['description'] }}
               </li>
             </ul>
           </div>
@@ -207,26 +116,14 @@
       #toggleButton
       (click)="toggleOptions()"
       class="top-1 right-5 absolute"
-      (clickOutside)="closeMenu($event)"
+      (clickOutside)="closeMenu()"
     >
       <span class="material-icons-outlined icon">more_horiz</span>
     </button>
     <div
       #optionsMenu
-      class="
-        options-menu
-        top-10
-        right-8
-        border-dark/60
-        absolute
-        z-50
-        flex flex-col
-        bg-light
-        border-2 border-solid
-        rounded-md
-        transition-opacity
-        duration-100
-      "
+      class="options-menu top-10 right-8 border-dark/60 absolute z-50 flex flex-col bg-light border-2 border-solid rounded-md
+      transition-opacity duration-100"
       [ngClass]="this.isHidden ? 'opacity-0' : 'opacity-100'"
     >
       <a [routerLink]="['edit']" class="option border-dark/30 border-b-2 border-solid">

@@ -1,6 +1,4 @@
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
-import { Ingredient } from './models/ingredient.model';
 import { Recipe } from './models/recipe.model';
 import { WebRequestService } from './web-request.service';
 
@@ -41,10 +39,7 @@ export class RecipeService {
   }
 
   updateIngredient(recipeId: String, ingredientId: String, payload: Object) {
-    return this.webReqService.patch(
-      `recipes/${recipeId}/ingredients/${ingredientId}`,
-      payload
-    );
+    return this.webReqService.patch(`recipes/${recipeId}/ingredients/${ingredientId}`, payload);
   }
 
   updateIngredients(recipeId: string, payload: Object) {
@@ -52,9 +47,7 @@ export class RecipeService {
   }
 
   deleteIngredient(recipeId: String, ingredientId: String) {
-    return this.webReqService.delete(
-      `recipes/${recipeId}/ingredients/${ingredientId}`
-    );
+    return this.webReqService.delete(`recipes/${recipeId}/ingredients/${ingredientId}`);
   }
 
   uploadFile(formData: FormData) {
