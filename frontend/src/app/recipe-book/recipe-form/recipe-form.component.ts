@@ -156,6 +156,9 @@ export class RecipeFormComponent implements OnInit {
       const formData = new FormData();
       formData.append('recipeImage', this.selectedFile);
       this.recipeService.uploadFile(formData).subscribe((response: any) => {
+        if (this.recipe?._imgId) {
+          this.recipeService.deleteFile(this.recipe._imgId).subscribe();
+        }
         newRecipe._imgId = response._id;
         if (!this.editMode) {
           this.submitRecipe(newRecipe);
@@ -163,7 +166,19 @@ export class RecipeFormComponent implements OnInit {
           this.updateRecipe(newRecipe);
         }
       });
+    } else if (this.fileSelected) {
+      if (this.recipe?._imgId) {
+        newRecipe._imgId = this.recipe._imgId;
+      }
+      if (!this.editMode) {
+        this.submitRecipe(newRecipe);
+      } else {
+        this.updateRecipe(newRecipe);
+      }
     } else {
+      if (this.recipe?._imgId) {
+        this.recipeService.deleteFile(this.recipe._imgId).subscribe();
+      }
       newRecipe._imgId = null;
       if (!this.editMode) {
         this.submitRecipe(newRecipe);
